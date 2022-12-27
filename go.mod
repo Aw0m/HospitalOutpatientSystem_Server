@@ -2,7 +2,11 @@ module gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server
 
 go 1.18
 
-require github.com/gin-gonic/gin v1.8.2
+require (
+	github.com/gin-gonic/gin v1.8.2
+	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/pkg/errors v0.9.1
+)
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
