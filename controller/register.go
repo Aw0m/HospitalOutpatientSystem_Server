@@ -14,6 +14,10 @@ func Register(ctx *gin.Context) {
 		ctx.JSON(403, gin.H{"message": "wrong param"})
 		return
 	}
+	if req.ID == "" || req.Name == "" || req.Password == "" {
+		ctx.JSON(403, gin.H{"message": "wrong param"})
+		return
+	}
 
 	err := biz.Register(ctx, req)
 	if err != nil {

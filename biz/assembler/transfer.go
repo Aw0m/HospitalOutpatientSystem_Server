@@ -3,15 +3,21 @@ package assembler
 import (
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/biz/cqe"
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/domain/bdm"
+	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/utils"
 	"github.com/pkg/errors"
+	"time"
 )
 
 func RegisterTransferDTO(request *cqe.RegisterRequest) (doctor bdm.Doctor, retError error) {
+	t, err := time.Parse(utils.TimeLayout, request.Birthday)
+	if err != nil {
+		return doctor, errors.Wrap(err, "parse time error")
+	}
 	doctor = bdm.Doctor{
 		UserBase: bdm.UserBase{
 			ID:       request.ID,
 			Name:     request.Name,
-			Birthday: request.Birthday,
+			Birthday: t,
 			Password: request.Password,
 		},
 		Position:     request.Position,

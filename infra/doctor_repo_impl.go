@@ -24,14 +24,15 @@ func (repo DoctorRepo) NextIdentity() (int64, error) {
 
 // Save 保存一个聚合
 func (repo DoctorRepo) Save(ctx context.Context, doctor *bdm.Doctor) error {
+	doctorRdm := convertor.DoctorTransferToRdm(*doctor)
+
 	db := client_db.GetDB()
-	doctor, err := repo.FindNonNil(ctx, doctor.ID)
-	if err != nil {
-		db.Model(&rdm.Doctor{}).Where("doctor_id = ?", doctor.ID).Updates(*doctor)
+	_, err := repo.FindNonNil(ctx, doctor.ID)
+	if err == nil {
+		db.Model(&rdm.Doctor{}).Where("doctor_id = ?", doctorRdm.Id).Updates(doctorRdm)
 		return nil
 	}
 
-	doctorRdm := convertor.DoctorTransferToRdm(*doctor)
 	res := db.Create(&doctorRdm)
 	return res.Error
 }
@@ -40,7 +41,7 @@ func (repo DoctorRepo) Save(ctx context.Context, doctor *bdm.Doctor) error {
 func (repo DoctorRepo) Find(ctx context.Context, id string) (*bdm.Doctor, error) {
 	db := client_db.GetDB()
 	doctor := new(rdm.Doctor)
-	res := db.Where("doctor_id = ?", id).Find(doctor)
+	res := db.Where("doctor_id = ?", id).First(doctor)
 	if errors.Is(res.Error, gorm.ErrRecordNotFound) {
 		return nil, nil
 	}
@@ -53,7 +54,7 @@ func (repo DoctorRepo) Find(ctx context.Context, id string) (*bdm.Doctor, error)
 func (repo DoctorRepo) FindNonNil(ctx context.Context, id string) (*bdm.Doctor, error) {
 	db := client_db.GetDB()
 	doctor := new(rdm.Doctor)
-	res := db.Where("doctor_id = ?", id).Find(doctor)
+	res := db.Where("doctor_id = ?", id).First(doctor)
 	if errors.Is(res.Error, gorm.ErrRecordNotFound) {
 		return nil, res.Error
 	}
