@@ -15,7 +15,7 @@ func Login(ctx *gin.Context) {
 	token, err := biz.Login(ctx, req.UserID, req.Password)
 	if err != nil {
 		ctx.JSON(500, gin.H{
-			"message": "login err",
+			"message": err.Error(),
 			"token":   "",
 		})
 		return
