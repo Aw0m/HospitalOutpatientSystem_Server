@@ -1,11 +1,12 @@
 package assembler
 
 import (
+	"time"
+
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/biz/cqe"
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/domain/bdm"
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/utils"
 	"github.com/pkg/errors"
-	"time"
 )
 
 func RegisterTransferDTO(request *cqe.RegisterRequest) (doctor bdm.Doctor, retError error) {
@@ -18,8 +19,8 @@ func RegisterTransferDTO(request *cqe.RegisterRequest) (doctor bdm.Doctor, retEr
 			ID:       request.ID,
 			Name:     request.Name,
 			Birthday: t,
-			Password: request.Password,
 		},
+		Password:     request.Password,
 		Position:     request.Position,
 		Profile:      request.Profile,
 		IsExpert:     request.IsExpert,

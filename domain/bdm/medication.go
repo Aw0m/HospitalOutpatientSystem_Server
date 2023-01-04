@@ -2,6 +2,7 @@ package bdm
 
 import "time"
 
+// Medication 药
 type Medication struct {
 	ID              string
 	Name            string

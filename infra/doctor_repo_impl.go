@@ -3,16 +3,12 @@ package infra
 import (
 	"context"
 
+	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/domain/bdm"
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/infra/convertor"
-
+	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/infra/dal/client_db"
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/infra/dal/rdm"
-
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
-
-	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/infra/dal/client_db"
-
-	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/domain/bdm"
 )
 
 type DoctorRepo struct {
@@ -66,4 +62,17 @@ func (repo DoctorRepo) FindNonNil(ctx context.Context, id string) (*bdm.Doctor, 
 // Remove 将一个聚合从仓储中删除
 func (repo DoctorRepo) Remove(ctx context.Context, doctor *bdm.Doctor) error {
 	return nil
+}
+
+func (repo DoctorRepo) FindFromDepartment(ctx context.Context, departmentID int64) (doctorList []bdm.Doctor, retErr error) {
+	db := client_db.GetDB()
+	var doctorRdmList []rdm.Doctor
+	res := db.Where("department_id = ?", departmentID).Find(&doctorRdmList)
+	if errors.Is(res.Error, gorm.ErrRecordNotFound) {
+		return nil, res.Error
+	}
+	for _, v := range doctorRdmList {
+		doctorList = append(doctorList, convertor.DoctorTransferToBdm(v))
+	}
+	return doctorList, nil
 }

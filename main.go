@@ -24,6 +24,7 @@ func main() {
 
 	r.POST("/login", controller.Login)
 	r.POST("/register", controller.Register)
+	r.POST("/wx/login", controller.WXLogin)
 
 	r.Use(middleware.Authorize())
 	r.GET("/auth", func(c *gin.Context) {
@@ -32,6 +33,28 @@ func main() {
 			"userID": userID,
 		})
 	})
+
+	departmentRouter := r.Group("/department")
+	{
+		//TODO
+		departmentRouter.POST("/get_all_department", controller.GetAllDepartment)
+		//TODO
+		departmentRouter.POST("/get_department_doctors", controller.GetAllDepartment)
+	}
+
+	patientRouter := r.Group("/patient")
+	{
+		//TODO
+		patientRouter.POST("get_place")
+		//TODO
+		patientRouter.POST("get_medical")
+	}
+
+	doctorRouter := r.Group("/doctor")
+	{
+		doctorRouter.POST("/get_from_department", controller.GetDocFromDepartment)
+		doctorRouter.POST("/get_appoint_order", controller.GetAppointOrder)
+	}
 
 	r.Run() // 监听并在 0.0.0.0:8080 上启动服务
 }

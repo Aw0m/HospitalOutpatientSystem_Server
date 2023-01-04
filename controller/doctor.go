@@ -6,44 +6,46 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Login(ctx *gin.Context) {
-	req := &cqe.LoginRequest{}
+func GetDocFromDepartment(ctx *gin.Context) {
+	req := new(cqe.GetDocFromDepartmentRequest)
 	if ctx.ShouldBindJSON(req) != nil {
 		ctx.JSON(403, gin.H{"message": "wrong param"})
 		return
 	}
-	token, err := biz.Login(ctx, req.UserID, req.Password)
+
+	doctorList, err := biz.GetDocFromDepartment(ctx, req.DepartmentID)
 	if err != nil {
 		ctx.JSON(500, gin.H{
 			"message": err.Error(),
-			"token":   "",
+			"doctors": nil,
 		})
 		return
 	}
 	ctx.JSON(200, gin.H{
 		"message": "success",
-		"token":   token,
+		"doctors": doctorList,
 	})
 	return
 }
 
-func WXLogin(ctx *gin.Context) {
-	req := &cqe.WXLoginRequest{}
+func GetAppointOrder(ctx *gin.Context) {
+	req := new(cqe.GetAppointTimeRequest)
 	if ctx.ShouldBindJSON(req) != nil {
 		ctx.JSON(403, gin.H{"message": "wrong param"})
 		return
 	}
-	token, err := biz.WXLogin(ctx, req.Code, req.Username)
+
+	registerList, err := biz.GetAppointOrder(ctx, req.DoctorID)
 	if err != nil {
 		ctx.JSON(500, gin.H{
-			"message": err.Error(),
-			"token":   "",
+			"message":      err.Error(),
+			"registerList": nil,
 		})
 		return
 	}
 	ctx.JSON(200, gin.H{
-		"message": "success",
-		"token":   token,
+		"message":      "success",
+		"registerList": registerList,
 	})
 	return
 }
