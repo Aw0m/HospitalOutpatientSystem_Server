@@ -34,20 +34,21 @@ func main() {
 		})
 	})
 
+	// 科室
 	departmentRouter := r.Group("/department")
 	{
 		departmentRouter.POST("/get_all_department", controller.GetAllDepartment)
 	}
 
+	// 病人
 	patientRouter := r.Group("/patient")
 	{
 		patientRouter.POST("get_place", controller.GetPlace)
 		patientRouter.POST("get_payment", controller.GetPayment)
-
-		//TODO
-		patientRouter.POST("get_medical")
+		patientRouter.POST("get_register_order", controller.GetRegisterOrder)
 	}
 
+	// 医生
 	doctorRouter := r.Group("/doctor")
 	{
 		doctorRouter.POST("/get_from_department", controller.GetDocFromDepartment)

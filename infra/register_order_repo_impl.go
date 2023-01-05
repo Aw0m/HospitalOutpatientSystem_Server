@@ -26,3 +26,16 @@ func (repo RegisterOrderRepo) FindByDoctorID(_ context.Context, doctorID string)
 	}
 	return registerList, nil
 }
+
+func (repo RegisterOrderRepo) FindByPatientID(_ context.Context, patientID string) (registerList []bdm.RegisterOrder, retErr error) {
+	db := client_db.GetDB()
+	var orderRdmList []rdm.RegisterOrder
+	res := db.Where("patient_id = ?", patientID).Order("appointment_time").Find(&orderRdmList)
+	if errors.Is(res.Error, gorm.ErrRecordNotFound) {
+		return nil, res.Error
+	}
+	for _, v := range orderRdmList {
+		registerList = append(registerList, convertor.RegisterOrderTransferToBdm(v))
+	}
+	return registerList, nil
+}

@@ -52,8 +52,31 @@ func GetPayment(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(200, gin.H{
-		"message": "success",
-		"place":   orderList,
+		"message":    "success",
+		"order_list": orderList,
+	})
+	return
+}
+
+func GetRegisterOrder(ctx *gin.Context) {
+	patientID, err := middleware.GetUserID(ctx)
+	if err != nil {
+		ctx.JSON(500, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+	orderList, err := biz.GetRegisterOrder(ctx, patientID)
+	if err != nil {
+		ctx.JSON(500, gin.H{
+			"message":    err.Error(),
+			"order_list": nil,
+		})
+		return
+	}
+	ctx.JSON(200, gin.H{
+		"message":    "success",
+		"order_list": orderList,
 	})
 	return
 }

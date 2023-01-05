@@ -36,3 +36,12 @@ func GetPayment(ctx context.Context, patientID string) (orderList []bdm.PaymentO
 	}
 	return orderList, nil
 }
+
+func GetRegisterOrder(ctx context.Context, patientID string) (orderList []bdm.RegisterOrder, retErr error) {
+	repo := infra.RegisterOrderRepo{}
+	orderList, err := repo.FindByPatientID(ctx, patientID)
+	if err != nil {
+		return nil, errors.WithMessage(err, "get order by patientID fail")
+	}
+	return orderList, nil
+}
