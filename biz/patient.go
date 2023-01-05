@@ -114,3 +114,32 @@ func PayAll(ctx context.Context, registerOrderID int64, payRegister, payPrescrip
 	}
 	return nil
 }
+
+func CancelAll(ctx context.Context, registerOrderID int64, cancelRegister, cancelPrescription, cancelCheckOrder bool) (
+	retErr error) {
+
+	if cancelRegister {
+		repoRegister := infra.RegisterOrderRepo{}
+		err := repoRegister.UpdateById(ctx, registerOrderID, "canceled")
+		if err != nil {
+			return err
+		}
+	}
+
+	if cancelPrescription {
+		repoPre := infra.PrescriptionOrderRepo{}
+		err := repoPre.UpdateById(ctx, registerOrderID, "canceled")
+		if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+			return err
+		}
+	}
+
+	if cancelCheckOrder {
+		repoCheck := infra.CheckOrderRepo{}
+		err := repoCheck.UpdateById(ctx, registerOrderID, "canceled")
+		if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+			return err
+		}
+	}
+	return nil
+}

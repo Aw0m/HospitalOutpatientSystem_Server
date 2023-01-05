@@ -167,3 +167,21 @@ func PayAll(ctx *gin.Context) {
 		"message": "success",
 	})
 }
+
+func CancelAll(ctx *gin.Context) {
+	req := new(cqe.CancelAllRequest)
+	if ctx.ShouldBindJSON(req) != nil {
+		ctx.JSON(403, gin.H{"message": "wrong param"})
+		return
+	}
+	err := biz.CancelAll(ctx, req.RegisterOrderID, req.CancelRegister, req.CancelPrescription, req.CancelCheckOrder)
+	if err != nil {
+		ctx.JSON(500, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+	ctx.JSON(200, gin.H{
+		"message": "success",
+	})
+}

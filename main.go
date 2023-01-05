@@ -52,6 +52,7 @@ func main() {
 		patientRouter.POST("get_check_order", controller.GetCheckOrder)
 		//patientRouter.POST("cancel_medication", controller.CancelMedication)
 		patientRouter.POST("pay_all", controller.PayAll)
+		patientRouter.POST("cancel_all", controller.CancelAll)
 	}
 
 	// 医生

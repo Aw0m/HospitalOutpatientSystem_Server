@@ -63,3 +63,10 @@ type PayAllRequest struct {
 	PayPrescription bool  `json:"pay_prescription"`
 	PayCheckOrder   bool  `json:"pay_check_order"`
 }
+
+type CancelAllRequest struct {
+	RegisterOrderID    int64 `json:"register_order_id"`
+	CancelRegister     bool  `json:"cancel_register"`
+	CancelPrescription bool  `json:"cancel_prescription"`
+	CancelCheckOrder   bool  `json:"cancel_check_order"`
+}
