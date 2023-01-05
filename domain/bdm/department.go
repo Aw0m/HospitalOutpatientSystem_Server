@@ -1,7 +1,8 @@
 package bdm
 
+// Department 科室
 type Department struct {
-	DepartmentID string `json:"department_id"`
+	DepartmentID int64  `json:"department_id"`
 	Name         string `json:"name"`
 	Description  string `json:"description"`
 }

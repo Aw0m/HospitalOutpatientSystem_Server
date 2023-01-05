@@ -13,7 +13,8 @@ type Doctor struct {
 	Position     string    `gorm:"column:position;type:varchar(255)" json:"position"`
 	Profile      string    `gorm:"column:profile;type:text" json:"profile"`
 	IsExpert     int       `gorm:"column:is_expert;type:tinyint(1)" json:"is_expert"`
-	DepartmentId string    `gorm:"column:department_id;type:varchar(255)" json:"department_id"`
+	DepartmentId int64     `gorm:"column:department_id;type:bigint(20)" json:"department_id"`
+	Password     string    `gorm:"column:password;type:varchar(255)" json:"password"`
 }
 
 func (m *Doctor) TableName() string {

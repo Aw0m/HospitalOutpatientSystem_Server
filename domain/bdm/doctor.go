@@ -1,9 +1,11 @@
 package bdm
 
+// Doctor 医生
 type Doctor struct {
 	UserBase
 	Position     string `json:"position"`
 	Profile      string `json:"profile"`
 	IsExpert     bool   `json:"is_expert"`
-	DepartmentID string `json:"department_id"`
+	Password     string `json:"password"`
+	DepartmentID int64  `json:"department_id"`
 }
