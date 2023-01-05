@@ -36,10 +36,7 @@ func main() {
 
 	departmentRouter := r.Group("/department")
 	{
-		//TODO
 		departmentRouter.POST("/get_all_department", controller.GetAllDepartment)
-		//TODO
-		departmentRouter.POST("/get_department_doctors", controller.GetAllDepartment)
 	}
 
 	patientRouter := r.Group("/patient")

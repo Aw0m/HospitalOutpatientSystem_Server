@@ -36,3 +36,10 @@ type GetPlaceRequest struct {
 
 type GetPaymentRequest struct {
 }
+
+type GetAllDepartmentRequest struct {
+}
+
+type GetDepartmentDoctorsRequest struct {
+	DoctorID string `json:"doctor_id"`
+}
