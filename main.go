@@ -46,6 +46,8 @@ func main() {
 		patientRouter.POST("get_place", controller.GetPlace)
 		patientRouter.POST("get_payment", controller.GetPayment)
 		patientRouter.POST("get_register_order", controller.GetRegisterOrder)
+		// 根据挂号ID获得处方
+		patientRouter.POST("get_prescription_order", controller.GetPrescriptionOrder)
 	}
 
 	// 医生

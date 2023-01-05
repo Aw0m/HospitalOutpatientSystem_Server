@@ -43,3 +43,7 @@ type GetAllDepartmentRequest struct {
 type GetDepartmentDoctorsRequest struct {
 	DoctorID string `json:"doctor_id"`
 }
+
+type GetPrescriptionOrder struct {
+	RegisterOrderID int64 `json:"register_order_id"`
+}
