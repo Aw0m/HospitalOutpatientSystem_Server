@@ -49,3 +49,26 @@ func (repo PrescriptionOrderRepo) GetPrescriptionOrder(ctx context.Context, regi
 
 	return orderList, nil
 }
+
+func (repo PrescriptionOrderRepo) FindRdm(ctx context.Context, id int64) (*rdm.PrescriptionOrder, error) {
+	db := client_db.GetDB()
+	order := new(rdm.PrescriptionOrder)
+	res := db.Where("register_order_id = ?", id).First(order)
+	if errors.Is(res.Error, gorm.ErrRecordNotFound) {
+		return nil, res.Error
+	}
+
+	return order, nil
+}
+
+// UpdateById 保存一个聚合
+func (repo PrescriptionOrderRepo) UpdateById(ctx context.Context, id int64, status string) error {
+	db := client_db.GetDB()
+	order, err := repo.FindRdm(ctx, id)
+	if err != nil {
+		return err
+	}
+	order.Status = status
+	db.Model(&rdm.PrescriptionOrder{}).Where("register_order_id = ?", id).Updates(order)
+	return nil
+}

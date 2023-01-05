@@ -149,3 +149,21 @@ func GetCheckOrder(ctx *gin.Context) {
 		"check_order_list": res,
 	})
 }
+
+func PayAll(ctx *gin.Context) {
+	req := new(cqe.GetCheckOrderRequest)
+	if ctx.ShouldBindJSON(req) != nil {
+		ctx.JSON(403, gin.H{"message": "wrong param"})
+		return
+	}
+	err := biz.PayAll(ctx, req.RegisterOrderID)
+	if err != nil {
+		ctx.JSON(500, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+	ctx.JSON(200, gin.H{
+		"message": "success",
+	})
+}

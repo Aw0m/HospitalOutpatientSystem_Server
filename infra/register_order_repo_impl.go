@@ -46,3 +46,26 @@ func (repo RegisterOrderRepo) SaveRegisterOrder(ctx context.Context, order bdm.R
 	res := db.Create(&orderRdm)
 	return res.Error
 }
+
+func (repo RegisterOrderRepo) FindRdm(ctx context.Context, id int64) (*rdm.RegisterOrder, error) {
+	db := client_db.GetDB()
+	order := new(rdm.RegisterOrder)
+	res := db.Where("order_id = ?", id).First(order)
+	if errors.Is(res.Error, gorm.ErrRecordNotFound) {
+		return nil, res.Error
+	}
+
+	return order, nil
+}
+
+// UpdateById 保存一个聚合
+func (repo RegisterOrderRepo) UpdateById(ctx context.Context, registerOrderID int64, status string) error {
+	db := client_db.GetDB()
+	order, err := repo.FindRdm(ctx, registerOrderID)
+	if err != nil {
+		return err
+	}
+	order.Status = status
+	db.Model(&rdm.RegisterOrder{}).Where("order_id = ?", registerOrderID).Updates(order)
+	return nil
+}

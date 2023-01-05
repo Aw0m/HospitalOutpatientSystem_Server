@@ -50,6 +50,8 @@ func main() {
 		patientRouter.POST("get_prescription_order", controller.GetPrescriptionOrder)
 		patientRouter.POST("to_appoint", controller.ToAppoint)
 		patientRouter.POST("get_check_order", controller.GetCheckOrder)
+		//patientRouter.POST("cancel_medication", controller.CancelMedication)
+		patientRouter.POST("pay_all", controller.PayAll)
 	}
 
 	// 医生

@@ -4,6 +4,7 @@ type CheckOrder struct {
 	Price           float64 `gorm:"column:price;type:double;NOT NULL" json:"price"`
 	RegisterOrderId int64   `gorm:"column:register_order_id;type:bigint(20);NOT NULL" json:"register_order_id"`
 	Name            string  `gorm:"column:name;type:varchar(255);NOT NULL" json:"name"`
+	Status          string  `gorm:"column:status;type:varchar(255);default:process;NOT NULL" json:"status"`
 }
 
 func (m *CheckOrder) TableName() string {

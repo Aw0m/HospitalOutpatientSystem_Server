@@ -7,6 +7,7 @@ import (
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/infra/dal/rdm"
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/utils"
 	"github.com/pkg/errors"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -85,4 +86,25 @@ func GetCheckOrder(ctx context.Context, registerOrderID int64) ([]rdm.CheckOrder
 	}
 	return res, nil
 
+}
+
+func PayAll(ctx context.Context, registerOrderID int64) (retErr error) {
+	repoRegister := infra.RegisterOrderRepo{}
+	err := repoRegister.UpdateById(ctx, registerOrderID, "success")
+	if err != nil {
+		return err
+	}
+
+	repoPre := infra.PrescriptionOrderRepo{}
+	err = repoPre.UpdateById(ctx, registerOrderID, "success")
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		return err
+	}
+
+	repoCheck := infra.CheckOrderRepo{}
+	err = repoCheck.UpdateById(ctx, registerOrderID, "success")
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		return err
+	}
+	return nil
 }

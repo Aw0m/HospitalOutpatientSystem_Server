@@ -21,3 +21,26 @@ func (repo CheckOrderRepo) FindCheckOrderByRegister(ctx context.Context, registe
 
 	return checkOrderRdmList, nil
 }
+
+func (repo CheckOrderRepo) FindRdm(ctx context.Context, id int64) (*rdm.CheckOrder, error) {
+	db := client_db.GetDB()
+	order := new(rdm.CheckOrder)
+	res := db.Where("register_order_id = ?", id).First(order)
+	if errors.Is(res.Error, gorm.ErrRecordNotFound) {
+		return nil, res.Error
+	}
+
+	return order, nil
+}
+
+// UpdateById 保存一个聚合
+func (repo CheckOrderRepo) UpdateById(ctx context.Context, id int64, status string) error {
+	db := client_db.GetDB()
+	order, err := repo.FindRdm(ctx, id)
+	if err != nil {
+		return err
+	}
+	order.Status = status
+	db.Model(&rdm.CheckOrder{}).Where("register_order_id = ?", id).Updates(order)
+	return nil
+}
