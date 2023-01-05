@@ -56,3 +56,10 @@ type ToAppointRequest struct {
 type GetCheckOrderRequest struct {
 	RegisterOrderID int64 `json:"register_order_id"`
 }
+
+type PayAllRequest struct {
+	RegisterOrderID int64 `json:"register_order_id"`
+	PayRegister     bool  `json:"pay_register"`
+	PayPrescription bool  `json:"pay_prescription"`
+	PayCheckOrder   bool  `json:"pay_check_order"`
+}
