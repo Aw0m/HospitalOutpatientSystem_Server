@@ -16,7 +16,7 @@ type MedicationRepo struct {
 func (repo MedicationRepo) FindByID(_ context.Context, MedicationID int64) (medication bdm.Medication, retErr error) {
 	db := client_db.GetDB()
 	medicationRdm := new(rdm.Medication)
-	res := db.Where("medication_id = ?", MedicationID).First(medicationRdm)
+	res := db.Where("id = ?", MedicationID).First(medicationRdm)
 	if errors.Is(res.Error, gorm.ErrRecordNotFound) {
 		return medication, res.Error
 	}
