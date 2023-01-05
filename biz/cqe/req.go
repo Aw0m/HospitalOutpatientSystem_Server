@@ -29,3 +29,10 @@ type GetDocFromDepartmentRequest struct {
 type GetAppointTimeRequest struct {
 	DoctorID string `json:"doctor_id"`
 }
+
+type GetPlaceRequest struct {
+	DoctorID string `json:"doctor_id"`
+}
+
+type GetPaymentRequest struct {
+}
