@@ -18,7 +18,7 @@ type LoginRequest struct {
 }
 
 type WXLoginRequest struct {
-	Code     string `json:"user_id,omitempty"`
+	Code     string `json:"code,omitempty"`
 	Username string `json:"password,omitempty"`
 }
 
