@@ -19,7 +19,7 @@ type LoginRequest struct {
 
 type WXLoginRequest struct {
 	Code     string `json:"code,omitempty"`
-	Username string `json:"password,omitempty"`
+	Username string `json:"username,omitempty"`
 }
 
 type GetDocFromDepartmentRequest struct {
