@@ -4,6 +4,7 @@ import (
 	"context"
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/domain/bdm"
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/infra"
+	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/utils"
 	"github.com/pkg/errors"
 	"time"
 )
@@ -53,4 +54,24 @@ func GetPrescriptionOrder(ctx context.Context, registerOrderID int64) (prescript
 		return nil, errors.WithMessage(retErr, "GetPrescriptionOrder from db fail")
 	}
 	return prescriptionOrderList, nil
+}
+
+func ToAppoint(ctx context.Context, patientID, doctorID, timeStr string) (res bool, retErr error) {
+	t, err := time.Parse(utils.TimeLayoutSec, timeStr)
+	if err != nil {
+		return false, errors.New("输入参数time不符合规范")
+	}
+	order := bdm.RegisterOrder{
+		OrderBase: bdm.OrderBase{
+			Status:     "process",
+			UpdateTime: time.Now().Unix(),
+			CreateTime: time.Now().Unix(),
+		},
+		AppointmentTime: t,
+		PatientID:       patientID,
+		DoctorID:        doctorID,
+		Price:           5,
+	}
+	repo := infra.RegisterOrderRepo{}
+	return true, repo.SaveRegisterOrder(ctx, order)
 }

@@ -101,3 +101,31 @@ func GetPrescriptionOrder(ctx *gin.Context) {
 	})
 	return
 }
+
+func ToAppoint(ctx *gin.Context) {
+	patientID, err := middleware.GetUserID(ctx)
+	if err != nil {
+		ctx.JSON(500, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	req := new(cqe.ToAppointRequest)
+	if ctx.ShouldBindJSON(req) != nil {
+		ctx.JSON(403, gin.H{"message": "wrong param"})
+		return
+	}
+	res, err := biz.ToAppoint(ctx, patientID, req.DoctorID, req.AppointTime)
+	if err != nil {
+		ctx.JSON(500, gin.H{
+			"message":     err.Error(),
+			"appoint_res": false,
+		})
+		return
+	}
+	ctx.JSON(200, gin.H{
+		"message":     "success",
+		"appoint_res": res,
+	})
+}

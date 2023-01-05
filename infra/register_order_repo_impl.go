@@ -39,3 +39,10 @@ func (repo RegisterOrderRepo) FindByPatientID(_ context.Context, patientID strin
 	}
 	return registerList, nil
 }
+
+func (repo RegisterOrderRepo) SaveRegisterOrder(ctx context.Context, order bdm.RegisterOrder) (retErr error) {
+	db := client_db.GetDB()
+	orderRdm := convertor.RegisterOrderTransferToRdm(order)
+	res := db.Create(&orderRdm)
+	return res.Error
+}
