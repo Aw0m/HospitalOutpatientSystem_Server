@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/gin-gonic/gin v1.8.2
 	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/json-iterator/go v1.1.12
 	github.com/pkg/errors v0.9.1
 	gorm.io/driver/mysql v1.4.4
 	gorm.io/gorm v1.24.2
@@ -19,7 +20,6 @@ require (
 	github.com/goccy/go-json v0.9.11 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
-	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mattn/go-isatty v0.0.16 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect
