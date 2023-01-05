@@ -129,3 +129,23 @@ func ToAppoint(ctx *gin.Context) {
 		"appoint_res": res,
 	})
 }
+
+func GetCheckOrder(ctx *gin.Context) {
+	req := new(cqe.GetCheckOrderRequest)
+	if ctx.ShouldBindJSON(req) != nil {
+		ctx.JSON(403, gin.H{"message": "wrong param"})
+		return
+	}
+	res, err := biz.GetCheckOrder(ctx, req.RegisterOrderID)
+	if err != nil {
+		ctx.JSON(500, gin.H{
+			"message":          err.Error(),
+			"check_order_list": nil,
+		})
+		return
+	}
+	ctx.JSON(200, gin.H{
+		"message":          "success",
+		"check_order_list": res,
+	})
+}

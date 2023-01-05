@@ -49,6 +49,7 @@ func main() {
 		// 根据挂号ID获得处方
 		patientRouter.POST("get_prescription_order", controller.GetPrescriptionOrder)
 		patientRouter.POST("to_appoint", controller.ToAppoint)
+		patientRouter.POST("get_check_order", controller.GetCheckOrder)
 	}
 
 	// 医生

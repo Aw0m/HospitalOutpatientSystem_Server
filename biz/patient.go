@@ -4,6 +4,7 @@ import (
 	"context"
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/domain/bdm"
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/infra"
+	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/infra/dal/rdm"
 	"gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server/utils"
 	"github.com/pkg/errors"
 	"time"
@@ -74,4 +75,14 @@ func ToAppoint(ctx context.Context, patientID, doctorID, timeStr string) (res bo
 	}
 	repo := infra.RegisterOrderRepo{}
 	return true, repo.SaveRegisterOrder(ctx, order)
+}
+
+func GetCheckOrder(ctx context.Context, registerOrderID int64) ([]rdm.CheckOrder, error) {
+	repo := infra.CheckOrderRepo{}
+	res, err := repo.FindCheckOrderByRegister(ctx, registerOrderID)
+	if err != nil {
+		return nil, errors.WithMessage(err, "get check_order from db fail")
+	}
+	return res, nil
+
 }

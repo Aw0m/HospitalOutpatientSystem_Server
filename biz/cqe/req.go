@@ -52,3 +52,7 @@ type ToAppointRequest struct {
 	DoctorID    string `json:"doctor_id"`
 	AppointTime string `json:"appoint_time"`
 }
+
+type GetCheckOrderRequest struct {
+	RegisterOrderID int64 `json:"register_order_id"`
+}
