@@ -18,6 +18,7 @@ func RegisterOrderTransferToBdm(order rdm.RegisterOrder) bdm.RegisterOrder {
 		AppointmentTime: time.Unix(order.AppointmentTime, 0),
 		PatientID:       order.PatientId,
 		DoctorID:        order.DoctorId,
+		Price:           order.Price,
 	}
 }
 
