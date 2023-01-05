@@ -15,21 +15,23 @@ func RegisterOrderTransferToBdm(order rdm.RegisterOrder) bdm.RegisterOrder {
 			UpdateTime: order.UpdateTime,
 			CreateTime: order.CreateTime,
 		},
-		AppointmentTime: time.Unix(order.AppointmentTime, 0),
-		PatientID:       order.PatientId,
-		DoctorID:        order.DoctorId,
-		Price:           order.Price,
+		AppointmentTime:  time.Unix(order.AppointmentTime, 0),
+		PatientID:        order.PatientId,
+		DoctorID:         order.DoctorId,
+		Price:            order.Price,
+		HasGetMedication: order.HasGetMedication,
 	}
 }
 
 func RegisterOrderTransferToRdm(order bdm.RegisterOrder) rdm.RegisterOrder {
 	return rdm.RegisterOrder{
-		OrderId:         order.OrderID,
-		Status:          order.Status,
-		UpdateTime:      order.UpdateTime,
-		CreateTime:      order.CreateTime,
-		AppointmentTime: order.AppointmentTime.Unix(),
-		PatientId:       order.PatientID,
-		DoctorId:        order.DoctorID,
+		OrderId:          order.OrderID,
+		Status:           order.Status,
+		UpdateTime:       order.UpdateTime,
+		CreateTime:       order.CreateTime,
+		AppointmentTime:  order.AppointmentTime.Unix(),
+		PatientId:        order.PatientID,
+		DoctorId:         order.DoctorID,
+		HasGetMedication: order.HasGetMedication,
 	}
 }
