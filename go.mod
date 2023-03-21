@@ -1,4 +1,4 @@
-module gitee.com/CQU-2022CurriculumProject/HospitalOutpatientSystem_Server
+module HospitalOutpatientSystem_Server
 
 go 1.18
 
